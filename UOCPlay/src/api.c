@@ -510,29 +510,95 @@ tApiError api_getFilmsByGenre(tApiData data, tCSVData *films, int genre) {
 
 // Get longest film
 tApiError api_getLongestFilm(tApiData data, tCSVEntry *entry) {
-    /////////////////////////////////
-    // PR3_4b
-    /////////////////////////////////
+    // Check preconditions
+    assert(entry != NULL);
     
-    return E_NOT_IMPLEMENTED;
+    // Initialize the entry
+    csv_initEntry(entry);
+    
+    // If there are no films, return an empty entry
+    if (film_catalog_len(data.films) == 0) {
+        entry->type = strdup("FILM");
+        entry->numFields = NUM_FIELDS_FILM;
+        entry->fields = (char**)malloc(NUM_FIELDS_FILM * sizeof(char*));
+        for (int i = 0; i < NUM_FIELDS_FILM; i++) {
+            entry->fields[i] = strdup("");
+        }
+        return E_SUCCESS;
+    }
+    
+    // Find the longest film
+    tFilm* longestFilm = filmList_longestFind(data.films.filmList);
+    
+    // If no film is found, return an empty entry
+    if (longestFilm == NULL) {
+        entry->type = strdup("FILM");
+        entry->numFields = NUM_FIELDS_FILM;
+        entry->fields = (char**)malloc(NUM_FIELDS_FILM * sizeof(char*));
+        for (int i = 0; i < NUM_FIELDS_FILM; i++) {
+            entry->fields[i] = strdup("");
+        }
+        return E_SUCCESS;
+    }
+    
+    // Create a buffer to store the film data
+    char buffer[FILE_READ_BUFFER_SIZE];
+    
+    // Get the film data as a string
+    film_get(*longestFilm, buffer);
+    
+    // Parse the string into a CSV entry
+    csv_parseEntry(entry, buffer, "FILM");
+    
+    return E_SUCCESS;
 }
 
 // Get longest free film
 tApiError api_getLongestFreeFilm(tApiData data, tCSVEntry *entry) {
-    /////////////////////////////////
-    // PR3_4c
-    /////////////////////////////////
+    // Check preconditions
+    assert(entry != NULL);
     
-    return E_NOT_IMPLEMENTED;
+    // Initialize the entry
+    csv_initEntry(entry);
+    
+    // If there are no free films, return an empty entry
+    if (film_catalog_freeLen(data.films) == 0) {
+        entry->type = strdup("FILM");
+        entry->numFields = 0;
+        entry->fields = NULL;
+        return E_SUCCESS;
+    }
+    
+    // Find the longest free film
+    tFilm* longestFreeFilm = freeFilmList_longestFind(data.films.freeFilmList);
+    
+    // If no film is found, return an empty entry
+    if (longestFreeFilm == NULL) {
+        entry->type = strdup("FILM");
+        entry->numFields = 0;
+        entry->fields = NULL;
+        return E_SUCCESS;
+    }
+    
+    // Create a buffer to store the film data
+    char buffer[FILE_READ_BUFFER_SIZE];
+    
+    // Get the film data as a string
+    film_get(*longestFreeFilm, buffer);
+    
+    // Parse the string into a CSV entry
+    csv_parseEntry(entry, buffer, "FILM");
+    
+    return E_SUCCESS;
 }
 
 // Sort catalog by year, oldest to newest
 tApiError api_sortCatalogByYear(tApiData *data) {
-    /////////////////////////////////
-    // PR3_4d
-    /////////////////////////////////
+    // Check preconditions
+    assert(data != NULL);
     
-    return E_NOT_IMPLEMENTED;
+    // Sort the catalog by year
+    return filmCatalog_SortByYear(&data->films);
 }
 
 // Get longest film
