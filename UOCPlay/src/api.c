@@ -3,6 +3,7 @@
 #include <assert.h>
 #include "csv.h"
 #include "api.h"
+#include "error.h"
 #include <string.h>
 
 // Get the API version information
@@ -592,16 +593,25 @@ tApiError api_getLongestFreeFilm(tApiData data, tCSVEntry *entry) {
     return E_SUCCESS;
 }
 
-// Sort catalog by year, oldest to newest
 tApiError api_sortCatalogByYear(tApiData *data) {
-    // Check preconditions
-    assert(data != NULL);
+    // Validar entrada
+    if (data == NULL) {
+        return E_NOT_IMPLEMENTED; // O el código de error más adecuado de error.h, por ejemplo E_STRUCTURE_EMPTY
+    }
     
-    // Sort the catalog by year
-    return filmCatalog_SortByYear(&data->films);
+    // Ordenar la lista principal de películas por año
+    if (filmList_SortByYear_Bubble(&data->films.filmList) != E_SUCCESS) {
+        return E_NOT_IMPLEMENTED; // O el código de error más adecuado de error.h
+    }
+    
+    // Ordenar la lista de películas gratuitas por año
+    if (freeFilmList_SortByYear_Bubble(&data->films.freeFilmList) != E_SUCCESS) {
+        return E_NOT_IMPLEMENTED; // O el código de error más adecuado de error.h
+    }
+    
+    data->films.sortedByDate = true;
+    return E_SUCCESS;
 }
-
-// Get longest film
 tApiError api_getOldestFilm(tApiData data, tCSVEntry *entry, bool free) {
     /////////////////////////////////
     // PR3_4e

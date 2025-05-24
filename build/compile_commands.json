@@ -1,0 +1,72 @@
+[
+{
+  "directory": "/workspaces/PR33/build",
+  "command": "/usr/bin/clang  -I/workspaces/PR33/src -I/workspaces/PR33/test/include -I/workspaces/PR33/UOCPlay/include  -g   -std=gnu99 -o CMakeFiles/PR33.dir/src/main.c.o   -c /workspaces/PR33/src/main.c",
+  "file": "/workspaces/PR33/src/main.c"
+},
+{
+  "directory": "/workspaces/PR33/build",
+  "command": "/usr/bin/clang  -I/workspaces/PR33/src -I/workspaces/PR33/test/include -I/workspaces/PR33/UOCPlay/include  -g   -std=gnu99 -o CMakeFiles/PR33.dir/test/src/test_suite.c.o   -c /workspaces/PR33/test/src/test_suite.c",
+  "file": "/workspaces/PR33/test/src/test_suite.c"
+},
+{
+  "directory": "/workspaces/PR33/build",
+  "command": "/usr/bin/clang  -I/workspaces/PR33/src -I/workspaces/PR33/test/include -I/workspaces/PR33/UOCPlay/include  -g   -std=gnu99 -o CMakeFiles/PR33.dir/test/src/test.c.o   -c /workspaces/PR33/test/src/test.c",
+  "file": "/workspaces/PR33/test/src/test.c"
+},
+{
+  "directory": "/workspaces/PR33/build",
+  "command": "/usr/bin/clang  -I/workspaces/PR33/src -I/workspaces/PR33/test/include -I/workspaces/PR33/UOCPlay/include  -g   -std=gnu99 -o CMakeFiles/PR33.dir/test/src/test_pr1.c.o   -c /workspaces/PR33/test/src/test_pr1.c",
+  "file": "/workspaces/PR33/test/src/test_pr1.c"
+},
+{
+  "directory": "/workspaces/PR33/build",
+  "command": "/usr/bin/clang  -I/workspaces/PR33/src -I/workspaces/PR33/test/include -I/workspaces/PR33/UOCPlay/include  -g   -std=gnu99 -o CMakeFiles/PR33.dir/test/src/test_pr2.c.o   -c /workspaces/PR33/test/src/test_pr2.c",
+  "file": "/workspaces/PR33/test/src/test_pr2.c"
+},
+{
+  "directory": "/workspaces/PR33/build",
+  "command": "/usr/bin/clang  -I/workspaces/PR33/src -I/workspaces/PR33/test/include -I/workspaces/PR33/UOCPlay/include  -g   -std=gnu99 -o CMakeFiles/PR33.dir/test/src/test_pr3.c.o   -c /workspaces/PR33/test/src/test_pr3.c",
+  "file": "/workspaces/PR33/test/src/test_pr3.c"
+},
+{
+  "directory": "/workspaces/PR33/build",
+  "command": "/usr/bin/clang  -I/workspaces/PR33/src -I/workspaces/PR33/test/include -I/workspaces/PR33/UOCPlay/include  -g   -std=gnu99 -o CMakeFiles/PR33.dir/UOCPlay/src/api.c.o   -c /workspaces/PR33/UOCPlay/src/api.c",
+  "file": "/workspaces/PR33/UOCPlay/src/api.c"
+},
+{
+  "directory": "/workspaces/PR33/build",
+  "command": "/usr/bin/clang  -I/workspaces/PR33/src -I/workspaces/PR33/test/include -I/workspaces/PR33/UOCPlay/include  -g   -std=gnu99 -o CMakeFiles/PR33.dir/UOCPlay/src/csv.c.o   -c /workspaces/PR33/UOCPlay/src/csv.c",
+  "file": "/workspaces/PR33/UOCPlay/src/csv.c"
+},
+{
+  "directory": "/workspaces/PR33/build",
+  "command": "/usr/bin/clang  -I/workspaces/PR33/src -I/workspaces/PR33/test/include -I/workspaces/PR33/UOCPlay/include  -g   -std=gnu99 -o CMakeFiles/PR33.dir/UOCPlay/src/date.c.o   -c /workspaces/PR33/UOCPlay/src/date.c",
+  "file": "/workspaces/PR33/UOCPlay/src/date.c"
+},
+{
+  "directory": "/workspaces/PR33/build",
+  "command": "/usr/bin/clang  -I/workspaces/PR33/src -I/workspaces/PR33/test/include -I/workspaces/PR33/UOCPlay/include  -g   -std=gnu99 -o CMakeFiles/PR33.dir/UOCPlay/src/film.c.o   -c /workspaces/PR33/UOCPlay/src/film.c",
+  "file": "/workspaces/PR33/UOCPlay/src/film.c"
+},
+{
+  "directory": "/workspaces/PR33/build",
+  "command": "/usr/bin/clang  -I/workspaces/PR33/src -I/workspaces/PR33/test/include -I/workspaces/PR33/UOCPlay/include  -g   -std=gnu99 -o CMakeFiles/PR33.dir/UOCPlay/src/person.c.o   -c /workspaces/PR33/UOCPlay/src/person.c",
+  "file": "/workspaces/PR33/UOCPlay/src/person.c"
+},
+{
+  "directory": "/workspaces/PR33/build",
+  "command": "/usr/bin/clang  -I/workspaces/PR33/src -I/workspaces/PR33/test/include -I/workspaces/PR33/UOCPlay/include  -g   -std=gnu99 -o CMakeFiles/PR33.dir/UOCPlay/src/show.c.o   -c /workspaces/PR33/UOCPlay/src/show.c",
+  "file": "/workspaces/PR33/UOCPlay/src/show.c"
+},
+{
+  "directory": "/workspaces/PR33/build",
+  "command": "/usr/bin/clang  -I/workspaces/PR33/src -I/workspaces/PR33/test/include -I/workspaces/PR33/UOCPlay/include  -g   -std=gnu99 -o CMakeFiles/PR33.dir/UOCPlay/src/subscription.c.o   -c /workspaces/PR33/UOCPlay/src/subscription.c",
+  "file": "/workspaces/PR33/UOCPlay/src/subscription.c"
+},
+{
+  "directory": "/workspaces/PR33/build",
+  "command": "/usr/bin/clang  -I/workspaces/PR33/src -I/workspaces/PR33/test/include -I/workspaces/PR33/UOCPlay/include  -g   -std=gnu99 -o CMakeFiles/PR33.dir/UOCPlay/src/watchstack.c.o   -c /workspaces/PR33/UOCPlay/src/watchstack.c",
+  "file": "/workspaces/PR33/UOCPlay/src/watchstack.c"
+}
+]
