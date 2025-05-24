@@ -331,9 +331,6 @@ tApiError api_freeData(tApiData* data) {
 
 // Add a new entry
 tApiError api_addDataEntry(tApiData* data, tCSVEntry entry) {
-    /////////////////////////////////
-    // Ex1 PR1_3e
-    /////////////////////////////////
     tApiError error;
     
     // Check preconditions
@@ -342,35 +339,56 @@ tApiError api_addDataEntry(tApiData* data, tCSVEntry entry) {
     // Assign default value to return it if does not match any type
     error = E_INVALID_ENTRY_TYPE;
     
-    if (strcmp(csv_getType(&entry), "PERSON") == 0){
+    if (strcmp(csv_getType(&entry), "PERSON") == 0) {
         // Add a person
         error = api_addPerson(data, entry);
-        
     }
-    else if (strcmp(csv_getType(&entry), "SUBSCRIPTION") == 0){
+    else if (strcmp(csv_getType(&entry), "SUBSCRIPTION") == 0) {
         // Add a subscription
         error = api_addSubscription(data, entry);
     }        
-    else if (strcmp(csv_getType(&entry), "FILM") == 0){
+    else if (strcmp(csv_getType(&entry), "FILM") == 0) {
         // Add a film to the films catalog
         error = api_addFilm(data, entry);
-        
     }
-    /////////////////////////////////
-    // Ex1 PR2 3e
-    /////////////////////////////////
-    else if (strcmp(csv_getType(&entry), "SHOW") == 0){
+    else if (strcmp(csv_getType(&entry), "SHOW") == 0) {
         // Add a film to the films catalog
         error = api_addShow(data, entry);   
-     
     } 
-    /////////////////////////////////
-    // PR3_4a
-    /////////////////////////////////
-  
+    else if (strcmp(csv_getType(&entry), "WATCHLIST") == 0) {
+        // PR3_4a: Add a film to a subscription's watchlist
+        // Format: "FilmName;FilmDuration;FilmGenre;ReleaseDate;Rating;Free;SubscriptionID"
+        
+        // Check if the entry has the correct number of fields
+        if (csv_numFields(entry) != NUM_FIELDS_FILM + 1) {
+            return E_INVALID_ENTRY_FORMAT;
+        }
+        
+        // Get the subscription ID from the last field
+        int subscriptionId = csv_getAsInteger(entry, NUM_FIELDS_FILM);
+        
+        // Create a new CSV entry for the film (without the subscription ID)
+        tCSVEntry filmEntry;
+        csv_initEntry(&filmEntry);
+        
+        // Copy the type
+        filmEntry.type = strdup("FILM");
+        
+        // Copy the fields (except the last one)
+        filmEntry.numFields = NUM_FIELDS_FILM;
+        filmEntry.fields = (char**)malloc(NUM_FIELDS_FILM * sizeof(char*));
+        for (int i = 0; i < NUM_FIELDS_FILM; i++) {
+            filmEntry.fields[i] = strdup(entry.fields[i]);
+        }
+        
+        // Add the film to the subscription's watchlist
+        error = api_addToWatchlist(data, subscriptionId, filmEntry);
+        
+        // Free the temporary film entry
+        csv_freeEntry(&filmEntry);
+    }
+    
     return error;
-    /////////////////////////////////
-    //return E_NOT_IMPLEMENTED;
 }
 
 // Get subscription data
