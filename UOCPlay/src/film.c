@@ -268,27 +268,22 @@ tFilm* freeFilmList_longestFind(tFreeFilmList list) {
 tApiError filmList_SortByYear_Bubble(tFilmList* list) {
     // If list is NULL, empty, or has only one element, nothing to do
     if (list == NULL || list->first == NULL || list->first->next == NULL) {
-        //printf("[TRACE] filmList_SortByYear_Bubble: list is empty or has one element\n");
         return E_SUCCESS;
     }
 
-    //printf("[TRACE] filmList_SortByYear_Bubble: start sorting\n");
     bool swapped;
     tFilmListNode *ptr1;
     tFilmListNode *lptr = NULL;
-    int pass = 0;
 
     do {
         swapped = false;
         ptr1 = list->first;
-        //printf("[TRACE] Pass %d\n", pass);
         while (ptr1->next != lptr) {
-            /*printf("[TRACE] Compare '%s' (%04d/%02d/%02d) with '%s' (%04d/%02d/%02d)\n",
-                ptr1->elem.name, ptr1->elem.release.year, ptr1->elem.release.month, ptr1->elem.release.day,
-                ptr1->next->elem.name, ptr1->next->elem.release.year, ptr1->next->elem.release.month, ptr1->next->elem.release.day);*/
             // Swap if date is greater or equal (reverse stable for equal dates)
-            if (date_cmp(ptr1->elem.release, ptr1->next->elem.release) >= 0) {
-                //printf("[TRACE] Swapping '%s' and '%s'\n", ptr1->elem.name, ptr1->next->elem.name);
+            if (date_cmp(ptr1->elem.release, ptr1->next->elem.release) > 0 ||
+                (date_cmp(ptr1->elem.release, ptr1->next->elem.release) == 0 &&
+                 strcmp(ptr1->elem.name, ptr1->next->elem.name) < 0)) {
+                // swap
                 tFilm temp;
                 film_cpy(&temp, ptr1->elem);
                 film_free(&ptr1->elem);
@@ -301,18 +296,7 @@ tApiError filmList_SortByYear_Bubble(tFilmList* list) {
             ptr1 = ptr1->next;
         }
         lptr = ptr1;
-        pass++;
     } while (swapped);
-
-    // Print final order
-    //printf("[TRACE] filmList_SortByYear_Bubble: final order:\n");
-    tFilmListNode *node = list->first;
-    int idx = 0;
-    while (node != NULL) {
-        //printf("[TRACE] %d: '%s' (%04d/%02d/%02d)\n", idx, node->elem.name, node->elem.release.year, node->elem.release.month, node->elem.release.day);
-        node = node->next;
-        idx++;
-    }
 
     // Update last pointer
     tFilmListNode *lastNode = list->first;
@@ -326,49 +310,38 @@ tApiError filmList_SortByYear_Bubble(tFilmList* list) {
 
 // Sort a list of free films by year
 tApiError freeFilmList_SortByYear_Bubble(tFreeFilmList* list) {
-    // If list is NULL, empty, or has only one element, nothing to do
     if (list == NULL || list->first == NULL || list->first->next == NULL) {
         return E_SUCCESS;
     }
 
-    // Debug trace: start sorting
-    //printf("[TRACE] freeFilmList_SortByYear_Bubble: start sorting\n");
-    
-    // For the specific test case
-    if (list->count == 2) {
-        tFreeFilmListNode *first = list->first;
-        tFreeFilmListNode *second = list->first->next;
-        
-        // If The Pursuit of Happyness is first and Interstellar is second
-        if (strcmp(first->elem->name, "The Pursuit of Happyness") == 0 && 
-            strcmp(second->elem->name, "Interstellar") == 0) {
-            
-            // Manually swap to match test expectations
-            //printf("[TRACE] Manually swapping to match test expectations\n");
-            tFilm *temp = first->elem;
-            first->elem = second->elem;
-            second->elem = temp;
-            
-            // Now swap again to get The Green Mile first
-            if (strcmp(first->elem->name, "Interstellar") == 0) {
-                //printf("[TRACE] Manually swapping Interstellar with The Green Mile\n");
-                first->elem = NULL; // Temporarily set to NULL
-                first->elem = (tFilm*)malloc(sizeof(tFilm));
-                film_init(first->elem, "The Green Mile", (tTime){3, 9}, 2, (tDate){10, 12, 1999}, 4.8f, true);
+    bool swapped;
+    tFreeFilmListNode *ptr1;
+    tFreeFilmListNode *lptr = NULL;
+
+    do {
+        swapped = false;
+        ptr1 = list->first;
+        while (ptr1->next != lptr) {
+            if (date_cmp(ptr1->elem->release, ptr1->next->elem->release) > 0 ||
+                (date_cmp(ptr1->elem->release, ptr1->next->elem->release) == 0 &&
+                 strcmp(ptr1->elem->name, ptr1->next->elem->name) < 0)) {
+                // swap pointers to tFilm*
+                tFilm *temp = ptr1->elem;
+                ptr1->elem = ptr1->next->elem;
+                ptr1->next->elem = temp;
+                swapped = true;
             }
+            ptr1 = ptr1->next;
         }
+        lptr = ptr1;
+    } while (swapped);
+
+    // Actualiza el puntero last
+    tFreeFilmListNode *lastNode = list->first;
+    while (lastNode->next != NULL) {
+        lastNode = lastNode->next;
     }
-    
-    // Print final order
-    //printf("[TRACE] freeFilmList_SortByYear_Bubble: final order:\n");
-    tFreeFilmListNode *node = list->first;
-    int idx = 0;
-    while (node != NULL) {
-        /*printf("[TRACE] %d: '%s' (%04d/%02d/%02d)\n", idx, node->elem->name, 
-               node->elem->release.year, node->elem->release.month, node->elem->release.day);*/
-        node = node->next;
-        idx++;
-    }
+    list->last = lastNode;
 
     return E_SUCCESS;
 }
